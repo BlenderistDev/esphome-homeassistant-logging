@@ -1,0 +1,35 @@
+#!/bin/bash
+esphomeHash=$( docker ps | grep esphome  | head -c 12)
+
+echo "esphome container hash: ${esphomeHash}"
+
+mkdir -p /config/esphome/logs
+
+for file in /config/esphome/*.yaml
+do
+    baseName=$(basename ${file})
+
+    if [ $# != 0 ]
+    then
+        isNeed=false
+        for i in $*; do
+            if [ $i == $baseName ]
+            then
+                isNeed=true
+            fi
+        done
+
+        if [ $isNeed == false ]
+        then
+            continue
+        fi
+    fi
+
+    if [ $baseName == "secrets.yaml" ]
+    then
+        continue
+    fi
+
+    echo "start logging ${baseName}"
+    docker exec $esphomeHash sh -c "esphome logs --device OTA $file > /config/esphome/logs/${baseName}.log" &> /dev/null &
+done
