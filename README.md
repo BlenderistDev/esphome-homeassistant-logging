@@ -6,17 +6,17 @@ Saving logs for home assistant esphome addon. Saves all your ESP logs to /config
 ```
 git clone https://github.com/BlenderistDev/esphome-homeassistant-logging.git
 cd esphome-homeassistant-logging
-chmod +x esplogs
+chmod +x esplog
 ```
 
 ## Launch
 
 ```
-./esplogs
+./esplog
 ```
 
 ## Launch for specific devices
 
 ```
-./esplogs mydevice1.yaml mydevice2.yaml
+./esplog mydevice1.yaml mydevice2.yaml
 ```
